@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="OrderMapper">
+ 	<sql id="search">
+ 		<if test="range != null">
+ 			<trim prefix="and (" suffix=")">
+ 				<choose>
+ 					<when test="range == 'n'.toString()">
+ 						ordernum like concat('%', #{keyword}, '%')
+ 					</when>
+ 					<when test="range == 'i'.toString()">
+ 						id like like concat('%', #{keyword}, '%')
+ 					</when>
+ 					<when test="range == 's'.toString()">
+ 						to_char(saledate, 'yyyy-MM-dd') like concat('%', #{keyword}, '%')
+ 					</when>
+ 				</choose>
+ 			</trim>
+ 		</if>
+ 	</sql>
+ 
+ 	<insert id="reg" parameterType="ovo">
+ 		insert into fb_order(ono, ordernum, amount, id, menu)
+ 		values (fb_seq_order_ono.nextval, fb_seq_order_ordernum.nextval, #{amount}, #{id}, #{menu})
+ 	</insert>
+ 	<select id="list" parameterType="pgvo" resultType="ovo">
+ 	<![CDATA[
+ 		select *
+ 		from (select @rownum := @rownum + 1 as rn, ono, ordernum, saledate, amount, id, menu
+ 			from fb_member, (select @rownum := 0) as rowcolumn  
+ 			where ono > 0
+ 	]]>
+ 		<include refid="search"/>
+	<![CDATA[
+			) as rownum_table where rn <= #{pageIndex} * #{countPerPage}
+ 			and rn > (#{pageIndex}-1) * #{countPerPage}
+	]]>
+ 	</select>
+ 	<select id="tc" parameterType="pgvo" resultType="int">
+ 		select count(ordernum) as cnt from fb_order where ordernum is not null
+ 		<include refid="search"/>
+ 	</select>
+ 	<select id="detail" parameterType="String" resultType="ovo">
+ 		select * from(select * from fb_order where id=#{id} order by ono desc) where rownum = 1
+  	</select>
+ 
+ </mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="CartMapper">
+ 	<insert id="reg" parameterType="ctvo">
+ 		insert into fb_cart(ctno, pno, id, total, pcount, sno, bno)
+ 		values (fb_seq_cart_ctno.nextval, #{pno}, #{id}, #{total}, #{pcount}, #{sno}, #{bno})
+ 	</insert>
+ 	<select id="list" resultType="ctvo">
+ 		select * from fb_cart where id=#{id}
+ 	</select>
+ 	<select id="listAll" resultType="ctvo">
+ 		select * from fb_cart
+ 	</select>
+ 	<select id="sum" resultType="int">
+ 		select case when sum(total) is null then 0
+ 		else sum(total) end
+ 		from fb_cart where id=#{id}
+ 	</select>
+ 	<update id="mod" parameterType="ctvo">
+ 		update fb_cart set cname=#{cname}
+ 		where ctno=#{ctno} 
+ 	</update>
+ 	<delete id="delAll" parameterType="String">
+ 		delete from fb_cart where id=#{id}
+ 	</delete>
+ 	<delete id="delOne" parameterType="int">
+ 		delete from fb_cart where ctno=#{ctno}
+ 	</delete>
+ </mapper> 

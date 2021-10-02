@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="MemberMapper">
+ 	<sql id="bc">
+ 		from fb_member where id=#{id}
+ 	</sql>
+ 	<sql id="search">
+ 		<if test="range != null">
+ 			<trim prefix="and (" suffix=")">
+ 				<choose>
+ 					<when test="range == 'i'.toString()">
+ 						id like concat('%', #{keyword}, '%')
+ 					</when>
+ 					<when test="range == 'n'.toString()">
+ 						mname like concat('%', #{keyword}, '%')
+ 					</when>
+ 					<when test="range == 'ni'.toString()">
+ 						mnick like concat('%', #{keyword}, '%')
+ 					</when>
+ 					<when test="range == 'r'.toString()">
+ 						date_format(mregdate, '%Y-%m-%d') like concat('%', #{keyword}, '%')
+ 					</when>
+ 				</choose>
+ 			</trim>
+ 		</if>
+ 	</sql>
+ 	
+ 	<insert id="reg" parameterType="mvo">
+ 		insert into fb_member(id, pw, mname, mnick, mbirth, mtype)
+ 		values (#{id}, #{pw}, #{mname}, #{mnick}, #{mbirth}, #{mtype})
+ 	</insert>
+ 	<select id="checkId" parameterType="String" resultType="int">
+ 		select count(id) as cnt <include refid="bc"/>
+ 	</select>
+ 	<select id="checkNickname" parameterType="String" resultType="int">
+ 		select count(mnick) as cnt from fb_member where mnick=#{mnick}
+ 	</select>
+ 	<select id="list" parameterType="pgvo" resultType="mvo">
+ 	<![CDATA[
+ 		select * 
+ 		from(select @rownum := @rownum + 1 as rn, id, pw, mname, mnick, mregdate, mbirth, mtype, mpoint
+ 			from fb_member, (select @rownum := 0) as rowcolumn 
+ 			where id is not null
+ 	]]>
+ 		<include refid="search"/>
+	<![CDATA[
+			) as rownum_table where rn <= #{pageIndex} * #{countPerPage}
+ 			and rn > (#{pageIndex}-1) * #{countPerPage}
+	]]>	
+ 	</select>
+ 	<select id="login" parameterType="mvo" resultType="mvo">
+ 		select * <include refid="bc"/> and pw=#{pw}
+ 	</select>
+ 	<select id="detail" parameterType="String" resultType="mvo">
+ 		select * <include refid="bc"/>
+ 	</select>
+ 	<select id="tc" parameterType="pgvo" resultType="int">
+ 		select count(id) as cnt from fb_member where id is not null
+ 		<include refid="search"/>
+ 	</select>
+ 	<update id="mod" parameterType="mvo">
+ 		update fb_member set pw=#{pw}, mname=#{mname}, mnick=#{mnick}, mtype=#{mtype}
+ 		where id=#{id} 
+ 	</update>
+ 	<delete id="del" parameterType="String">
+ 		delete <include refid="bc"/>
+ 	</delete>
+ 	<update id="type" parameterType="mvo">
+ 		update fb_member set mtype=#{mtype} where id=#{id} 
+ 	</update>
+ 	<update id="point" parameterType="mvo">
+ 		update fb_member set mpoint=#{mpoint} where id=#{id} 
+ 	</update>
+ </mapper> 

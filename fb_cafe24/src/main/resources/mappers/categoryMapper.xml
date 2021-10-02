@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="CategoryMapper">
+ 	<sql id="bc">
+ 		from fb_category where cno=#{cno}
+ 	</sql>
+ 	<insert id="reg" parameterType="cvo">
+ 		insert into fb_category(cno, cname)
+ 		values (fb_seq_category_cno.nextval, #{cname})
+ 	</insert>
+ 	<select id="list" resultType="cvo">
+ 		select * from fb_category order by cno
+ 	</select>
+ 	<update id="mod" parameterType="cvo">
+ 		update fb_category set cname=#{cname}
+ 		where cno=#{cno} 
+ 	</update>
+ 	<delete id="del" parameterType="String">
+ 		delete <include refid="bc"/>
+ 	</delete>
+ </mapper> 

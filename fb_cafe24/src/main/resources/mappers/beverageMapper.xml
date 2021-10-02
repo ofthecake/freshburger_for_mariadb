@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="BeverageMapper">
+ 	<insert id="reg" parameterType="bvo">
+ 		insert into fb_product_beverage(bno, bname, bprice)
+ 		values (nextval(fb_seq_beverage_bno), #{bname}, #{bprice})
+ 	</insert>
+ 	<select id="list" resultType="bvo">
+ 		select * from fb_product_beverage order by bno
+ 	</select>
+ 	<select id="detail" resultType="bvo">
+ 		select * from fb_product_beverage where bno=#{bno}
+ 	</select>
+ 	<select id="price" parameterType="int" resultType="int">
+ 		select bprice from fb_product_beverage where bno=#{bno}
+ 	</select>
+ 	<delete id="del" parameterType="String">
+ 		delete from fb_product_beverage where bno=#{bno}
+ 	</delete>
+ </mapper> 

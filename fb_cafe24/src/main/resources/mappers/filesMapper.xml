@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="FilesMapper">
+  
+  <insert id="reg" parameterType="fvo">
+  	insert into fb_product_files
+  	values (#{uuid}, #{savedir}, #{fname}, #{ftype}, #{pno})
+  </insert>
+  <select id="list" resultType="fvo">
+  	select * from fb_product_files
+  </select>
+  <select id="selectOne" parameterType="int" resultType="fvo">
+  	select * from fb_product_files where pno=#{pno}
+  </select>
+  <delete id="del" parameterType="int">
+  	delete from fb_product_files where pno=#{pno}
+  </delete>
+  
+  </mapper>
