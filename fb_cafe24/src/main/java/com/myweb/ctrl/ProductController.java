@@ -94,13 +94,13 @@ public class ProductController {
 	}
 	
 	@PostMapping("/register")
-	public String register(ProductVO pvo, RedirectAttributes reAttr,
+	public String register(ProductVO pvo, RedirectAttributes reAttr, @RequestParam("pname") String pname,
 			@RequestParam(name = "files", required = false)MultipartFile[] files) {
+		String temp = pname;
 		int isUp = psv.register(pvo);
 		if(isUp > 0) {
 			if(files[0].getSize() > 0) {
-				int pno = psv.getCurrPno();
-				// 겟 커런트피노 -> psv.getCurrPno(pvo.getName); > 맵퍼수정
+				int pno = psv.getCurrPno(temp);
 				isUp = fp.upload_file(files, pno);
 			}
 		}

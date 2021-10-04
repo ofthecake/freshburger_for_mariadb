@@ -65,8 +65,8 @@ public class ProductService implements ProductServiceRule {
 	}
 
 	@Override
-	public int getCurrPno() {
-		return pdao.selectOne();
+	public int getCurrPno(String pname) {
+		return pdao.selectOne(pname);
 	}
 
 }

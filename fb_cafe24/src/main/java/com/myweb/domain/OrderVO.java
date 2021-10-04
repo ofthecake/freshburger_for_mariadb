@@ -2,7 +2,6 @@ package com.myweb.domain;
 
 public class OrderVO {
 	private int ono;
-	private int ordernum;
 	private String saledate;
 	private int amount;
 	private String id;
@@ -13,12 +12,6 @@ public class OrderVO {
 	}
 	public void setOno(int ono) {
 		this.ono = ono;
-	}
-	public int getOrdernum() {
-		return ordernum;
-	}
-	public void setOrdernum(int ordernum) {
-		this.ordernum = ordernum;
 	}
 	public String getSaledate() {
 		return saledate;
@@ -46,7 +39,7 @@ public class OrderVO {
 	}
 	@Override
 	public String toString() {
-		return "OrderVO [ono=" + ono + ", ordernum=" + ordernum + ", saledate=" + saledate + ", amount=" + amount
+		return "OrderVO [ono=" + ono + ", saledate=" + saledate + ", amount=" + amount
 				+ ", id=" + id + ", menu=" + menu + "]";
 	}
 	

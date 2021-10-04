@@ -14,5 +14,5 @@ public interface ProductServiceRule {
 	public ProductVO detail(int pno);
 	public int modify(ProductVO pvo);
 	public int remove(int pno);
-	public int getCurrPno();
+	public int getCurrPno(String pname);
 }

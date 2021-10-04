@@ -23,7 +23,7 @@
  		select * <include refid="bcp"/>
  	</select>
  	<select id="curr" resultType="int">
- 		select fb_seq_product_pno.currval from dual
+ 		select pno from fb_product where pname=#{pname}
  	</select>
  	
  	<update id="mod" parameterType="pvo">

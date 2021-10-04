@@ -56,8 +56,8 @@ public class ProductDAO implements ProductDAORule {
 	}
 
 	@Override
-	public int selectOne() {
-		return sql.selectOne(NS+"curr");
+	public int selectOne(String pname) {
+		return sql.selectOne(NS+"curr", pname);
 	}
 
 }

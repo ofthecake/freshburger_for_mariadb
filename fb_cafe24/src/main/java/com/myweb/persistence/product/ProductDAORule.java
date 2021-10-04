@@ -13,6 +13,6 @@ public interface ProductDAORule {
 	public ProductVO selectOne(int pno);
 	public int update(ProductVO pvo);
 	public int delete(int pno);
-	public int selectOne();
+	public int selectOne(String pname);
 	
 }
