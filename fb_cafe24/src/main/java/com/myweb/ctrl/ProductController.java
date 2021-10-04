@@ -100,6 +100,7 @@ public class ProductController {
 		if(isUp > 0) {
 			if(files[0].getSize() > 0) {
 				int pno = psv.getCurrPno();
+				// 겟 커런트피노 -> psv.getCurrPno(pvo.getName); > 맵퍼수정
 				isUp = fp.upload_file(files, pno);
 			}
 		}

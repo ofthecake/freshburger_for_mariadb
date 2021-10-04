@@ -27,7 +27,7 @@
   	      <h4 style="margin-top: 50px; text-align: center; width: 100%">주문번호</h4>
   	    </div>
   	    <div style="width: 50%; height: 100%; float: right;">
-  	      <h4 style="margin-top: 50px; text-align: center; width: 100%">${ovo.ordernum }</h4>
+  	      <h4 style="margin-top: 50px; text-align: center; width: 100%">${ovo.ono }</h4>
   	    </div>
   	  </div>
   	  <div style="width: 100%; height: 200px;">

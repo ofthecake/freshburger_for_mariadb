@@ -6,8 +6,8 @@
  		from fb_category where cno=#{cno}
  	</sql>
  	<insert id="reg" parameterType="cvo">
- 		insert into fb_category(cno, cname)
- 		values (fb_seq_category_cno.nextval, #{cname})
+ 		insert into fb_category(cname)
+ 		values (#{cname})
  	</insert>
  	<select id="list" resultType="cvo">
  		select * from fb_category order by cno

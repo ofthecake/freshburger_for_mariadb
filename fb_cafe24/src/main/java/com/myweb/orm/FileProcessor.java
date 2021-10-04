@@ -27,13 +27,11 @@ public class FileProcessor {
 	private FilesDAORule fdao;
 
 	public int upload_file(MultipartFile[] files, int pno) {
-		final String UP_DIR = "C:\\javaworkspace\\_spring\\workspace\\upload";
-		
-		// upload/2021/06/28/uuid_fname.jpg => if 이미지 : uuid_th_fname.jpg
-		
-		LocalDate date = LocalDate.now(); //w3school > java
-		String today = date.toString(); // 2021-09-20
-		today = today.replace("-", File.separator); // 2021\\09\\20
+		final String UP_DIR = "upload";
+
+		LocalDate date = LocalDate.now();
+		String today = date.toString();
+		today = today.replace("-", File.separator);
 		
 		File folder = new File(UP_DIR, today);
 		
@@ -43,7 +41,6 @@ public class FileProcessor {
 		
 		for (MultipartFile f : files) {
 			FilesVO fvo = new FilesVO();
-//			today = today.replace("\\","/");
 			fvo.setSavedir(today);
 			
 			String originalFileName = f.getOriginalFilename();

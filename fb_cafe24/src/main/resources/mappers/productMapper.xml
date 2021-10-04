@@ -9,8 +9,8 @@
  	from fb_product where cno=#{cno}
  </sql>
  	<insert id="reg" parameterType="pvo">
- 		insert into fb_product(pno, pname, pprice, pdesc, cno)
- 		values (fb_seq_product_pno.nextval, #{pname}, #{pprice}, trim(#{pdesc}), #{cno})
+ 		insert into fb_product(pname, pprice, pdesc, cno)
+ 		values (#{pname}, #{pprice}, trim(#{pdesc}), #{cno})
  	</insert>
  	
  	<select id="list" parameterType="int" resultType="pvo">

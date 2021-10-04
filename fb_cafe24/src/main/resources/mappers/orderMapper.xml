@@ -21,13 +21,13 @@
  	</sql>
  
  	<insert id="reg" parameterType="ovo">
- 		insert into fb_order(ono, ordernum, amount, id, menu)
- 		values (fb_seq_order_ono.nextval, fb_seq_order_ordernum.nextval, #{amount}, #{id}, #{menu})
+ 		insert into fb_order(amount, id, menu)
+ 		values (#{amount}, #{id}, #{menu})
  	</insert>
  	<select id="list" parameterType="pgvo" resultType="ovo">
  	<![CDATA[
  		select *
- 		from (select @rownum := @rownum + 1 as rn, ono, ordernum, saledate, amount, id, menu
+ 		from (select @rownum := @rownum + 1 as rn, ono, saledate, amount, id, menu
  			from fb_member, (select @rownum := 0) as rowcolumn  
  			where ono > 0
  	]]>
@@ -38,7 +38,7 @@
 	]]>
  	</select>
  	<select id="tc" parameterType="pgvo" resultType="int">
- 		select count(ordernum) as cnt from fb_order where ordernum is not null
+ 		select count(ono) as cnt from fb_order where ono is not null
  		<include refid="search"/>
  	</select>
  	<select id="detail" parameterType="String" resultType="ovo">
