@@ -44,7 +44,7 @@
 	    <tbody>
 	    <c:forEach items="${list }" var="ovo">
 	      <tr>
-	        <td>${ovo.ordernum }</td>
+	        <td>${ovo.ono }</td>
 	        <td>${ovo.id }</td>
 	        <td>${ovo.saledate }</td>
 	        <td>

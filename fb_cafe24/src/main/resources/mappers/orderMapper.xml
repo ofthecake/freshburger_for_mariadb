@@ -7,7 +7,7 @@
  			<trim prefix="and (" suffix=")">
  				<choose>
  					<when test="range == 'n'.toString()">
- 						ordernum like concat('%', #{keyword}, '%')
+ 						ono like concat('%', #{keyword}, '%')
  					</when>
  					<when test="range == 'i'.toString()">
  						id like like concat('%', #{keyword}, '%')
@@ -28,7 +28,7 @@
  	<![CDATA[
  		select *
  		from (select @rownum := @rownum + 1 as rn, ono, saledate, amount, id, menu
- 			from fb_member, (select @rownum := 0) as rowcolumn  
+ 			from fb_order, (select @rownum := 0) as rowcolumn  
  			where ono > 0
  	]]>
  		<include refid="search"/>
@@ -42,7 +42,11 @@
  		<include refid="search"/>
  	</select>
  	<select id="detail" parameterType="String" resultType="ovo">
- 		select * from(select * from fb_order where id=#{id} order by ono desc) where rownum = 1
+ 	<![CDATA[
+ 		select * 
+ 		from (select @rownum := @rownum + 1 as rn, ono, saledate, amount, id, menu from fb_order, (select @rownum := 0) as rowcolumn 
+ 		where id=#{id} order by ono desc)A where rn = 1
+ 	]]>
   	</select>
  
  </mapper>

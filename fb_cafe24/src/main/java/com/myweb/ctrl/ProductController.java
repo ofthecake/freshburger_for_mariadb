@@ -95,19 +95,21 @@ public class ProductController {
 	
 	@PostMapping("/register")
 	public String register(ProductVO pvo, RedirectAttributes reAttr, @RequestParam("pname") String pname,
-			@RequestParam(name = "files", required = false)MultipartFile[] files) {
+			@RequestParam(name = "files", required = false)MultipartFile[] files ) {		
 		String temp = pname;
 		int isUp = psv.register(pvo);
 		if(isUp > 0) {
 			if(files[0].getSize() > 0) {
-				int pno = psv.getCurrPno(temp);
-				isUp = fp.upload_file(files, pno);
-			}
-		}
+				Integer pno = psv.getCurrPno(temp);
+				if(pno!=null) {					
+					isUp = fp.upload_file(files, pno);
+				}
+			}				
+		}		
 		reAttr.addFlashAttribute("result", isUp > 0 ? "상품등록 성공" : "상품등록 실패!");
 		return "redirect:/product/list?cno=1";
 	}
-	
+		
 	@GetMapping("/register")
 	public void register(Model model) {
 		logger.info("/WEB-INF/views/product/register.jsp");
